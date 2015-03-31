@@ -1,0 +1,25 @@
+{
+  "name": "jsat",
+  "version": "0.0.1",
+  "description": "An annotation-based javascript transformer",
+  "keywords": [
+    "npm",
+    "javascript",
+    "annotation",
+    "annotate"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Jack Anderson",
+    "email": "johnwanderson@gmail.com",
+    "url": "http://www.github.com/jackwanders"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^3.6.0",
+    "recast": "^0.10.11"
+  }
+}
