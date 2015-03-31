@@ -5,13 +5,9 @@
 /**
  * @deprecated testmodule.foo is deprecated because you can add on your own
  * another comment
- * @suppressConsole
  */
 var foo = function(firstArgument, secondArgument) {
-	console.log('log message');
-	console.info('info message');
-	console.warn('warn message');
-	console.error('error message');
+	console.info('i can add!');
 	// inside comment
 	return firstArgument + secondArgument;
 };

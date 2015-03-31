@@ -1,6 +1,6 @@
 function $$ANNOTATION_TARGET_VARIABLE_NAME$$($$ANNOTATION_TARGET_FUNCTION_ARGUMENTS$$) {
 	if (!(this instanceof $$ANNOTATION_TARGET_VARIABLE_NAME$$)) {
-		throw new Error('$$ANNOTATION_TARGET_VARIABLE_NAME$$ is a constructor and must be instantiated with the new keyword');
+		throw new SyntaxError('mising new keyword when calling $$ANNOTATION_TARGET_VARIABLE_NAME$$ constructor');
 	}
 	$$ANNOTATION_TARGET_FUNCTION_BODY$$;
 }

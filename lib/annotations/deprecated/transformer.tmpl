@@ -3,7 +3,11 @@
 	return function($$ANNOTATION_TARGET_FUNCTION_ARGUMENTS$$) {
 		if (!$$executed$$) {
 			$$executed$$ = true;
-			console.warn($$ANNOTATION_VALUE$$);
+			if (typeof console.trace === 'function') {
+				console.trace($$ANNOTATION_VALUE$$);
+			} else if (typeof console.warn === 'function') {
+				console.warn($$ANNOTATION_VALUE$$);
+			}
 		}
 		$$ANNOTATION_TARGET_FUNCTION_BODY$$;
 	};
