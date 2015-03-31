@@ -5,9 +5,13 @@
 /**
  * @deprecated testmodule.exportFoo is deprecated in favor of testmodule.exportBar
  * another comment
+ * @suppressConsole
  */
 var foo = function(firstArgument, secondArgument) {
-	console.log('\nadding ' + firstArgument + ' and ' + secondArgument);
+	console.log('log message');
+	console.info('info message');
+	console.warn('warn message');
+	console.error('error message');
 	// inside comment
 	return firstArgument + secondArgument;
 };

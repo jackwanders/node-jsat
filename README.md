@@ -33,7 +33,7 @@ Running this source code through `jsat` will transform the source to:
  */
 var add = (function() {
     var $$executed$$ = false;
-    var ret = function(a, b) {
+    return function(a, b) {
         if (!$$executed$$) {
             $$executed$$ = true;
             console.warn("add is deprecated, please update your code to use betterAdd");
@@ -42,6 +42,5 @@ var add = (function() {
             return a + b;
         }
     };
-    return ret;
 })();
 ```
