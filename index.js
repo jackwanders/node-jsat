@@ -14,5 +14,3 @@ var moduleAST = recast.parse(fs.readFileSync(infile, 'utf8'));
 annotations.enact(moduleAST);
 
 fs.writeFileSync(outfile, recast.print(moduleAST).code);
-
-

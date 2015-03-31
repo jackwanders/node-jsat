@@ -3,7 +3,7 @@
  */
 
 /**
- * @deprecated testmodule.exportFoo is deprecated in favor of testmodule.exportBar
+ * @deprecated testmodule.foo is deprecated because you can add on your own
  * another comment
  * @suppressConsole
  */
@@ -17,18 +17,18 @@ var foo = function(firstArgument, secondArgument) {
 };
 
 /**
- * asdf
- * asdf
- *
+ * @constructor
  */
-function bar(a, b) {
-	console.log('\nmultiplying ' + a + ' by 3, then adding ' + b);
-	var x = a * 3;
-	return x + b;
-}
+var Car = function(make, model) {
+	this.make = make;
+	this.model = model;
+	this.toString = function() {
+		return this.make + ' ' + this.model;
+	}
+};
 
 
 module.exports = {
-	exportFoo: foo,
-	exportBar: bar
+	foo: foo,
+	Car: Car
 };
