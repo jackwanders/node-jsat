@@ -1,6 +1,9 @@
 var Annotation = require('../lib/Annotation');
 var assert = require('chai').assert;
 var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
+var recast = require('recast');
 
 describe('Annotation', function() {
 
@@ -23,6 +26,9 @@ describe('Annotation', function() {
 				});
 			});
 		});
+	});
+
+	describe('annotation detection', function() {
 
 		it('builds a regex containing the annotation name', function() {
 			var a = new Annotation({
@@ -40,6 +46,52 @@ describe('Annotation', function() {
 			});
 			_.each(aliases, function(alias) {
 				assert(a.regex.toString().indexOf(alias) >= 0, 'expected .regex to contain alias "' + alias + '"');
+			});
+		});
+
+		it('properly detects existence of annotation JSDoc comments', function() {
+			var a = new Annotation({
+				name: 'foo',
+				type: 'function'
+			});
+			var goodComments = [
+				'/** @foo */',
+				'/**\n * @foo\n */'
+			];
+			_.each(goodComments, function(comment) {
+				var val = recast.parse(comment).program.comments[0].value;
+				assert(a.commentContainsAnnotation(val), 'expected annotation to detect existence of @foo in ' + comment);
+			});
+		});
+
+		it('properly ignores non JSDoc comments', function() {
+			var a = new Annotation({
+				name: 'foo',
+				type: 'function'
+			});
+			var badComments = [
+				'// @foo',
+				'/* @foo */',
+				'/*\n @foo\n */'
+			];
+			_.each(badComments, function(comment) {
+				var val = recast.parse(comment).program.comments[0].value;
+				assert.isFalse(a.commentContainsAnnotation(val), 'expected annotation to ignore ' + comment);
+			});
+		});
+
+		it('properly ignores other annotations', function() {
+			var a = new Annotation({
+				name: 'foo',
+				type: 'function'
+			});
+			var badComments = [
+				'/** @bar */',
+				'/**\n * @foobar\n */'
+			];
+			_.each(badComments, function(comment) {
+				var val = recast.parse(comment).program.comments[0].value;
+				assert.isFalse(a.commentContainsAnnotation(val), 'expected annotation to ignore ' + comment);
 			});
 		});
 
