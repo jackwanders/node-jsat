@@ -9,7 +9,7 @@ describe('Annotation', function() {
 
 	describe('constructor', function() {
 
-		it('exists', function() {
+		it('is a function', function() {
 			assert.equal(typeof Annotation, 'function', 'expected Annotation to be a function');
 		});
 
