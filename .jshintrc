@@ -1,0 +1,23 @@
+{
+	"bitwise": true,
+	"curly": true,
+	"eqeqeq": true,
+	"forin": true,
+	"freeze": true,
+	"latedef": "nofunc",
+	"maxcomplexity": 6,
+	"noarg": true,
+	"nonbsp": true,
+	"undef": true,
+	"unused": true,
+
+	"eqnull": true,
+
+	"node": true,
+	"devel": true,
+
+	"globals": {
+		"module": true,
+		"require": true
+	}
+}

@@ -8,9 +8,13 @@
     "annotation",
     "annotate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jackwanders/node-jsat"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt checkcode && mocha"
   },
   "author": {
     "name": "Jack Anderson",
@@ -21,5 +25,13 @@
   "dependencies": {
     "lodash": "^3.6.0",
     "recast": "^0.10.11"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.1",
+    "grunt-jscs": "^1.6.0",
+    "load-grunt-tasks": "^3.1.0",
+    "mocha": "^2.2.1"
   }
 }
