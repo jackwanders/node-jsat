@@ -12,9 +12,7 @@ var foo = function(firstArgument, secondArgument) {
 	return firstArgument + secondArgument;
 };
 
-/**
- * @constructor
- */
+/** @constructor */
 var Car = function(make, model) {
 	this.make = make;
 	this.model = model;
