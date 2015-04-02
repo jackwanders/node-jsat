@@ -1,6 +1,6 @@
 {
   "name": "jsat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An annotation-based javascript transformer",
   "keywords": [
     "npm",
