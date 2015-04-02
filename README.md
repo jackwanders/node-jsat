@@ -36,7 +36,6 @@ fs.writeFileSync('path/to/outputfile.js', output);
 ```
 
 ### TODO
-
-* Create a simple framework for creating new annotation types, focusing on the process of writing the transform module
-* Create a small library of (hopefully) useful annotation transforms
+* Create a small library of (hopefully) useful transforms for various JSDoc annotations
+* Create an easy to use API for creating custom annotation types, allowing developers to build reusable transforms to apply to their own code bases (e.g. argument validation, request scoping, etc)
 * Create a grunt or browserify plugin so that this can be included in existing build processes
