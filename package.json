@@ -15,7 +15,8 @@
   "main": "index.js",
   "scripts": {
     "examples": "node ./examples/build.js && node ./examples/run.js",
-    "test": "grunt checkcode && mocha"
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec",
+    "test": "grunt checkcode && npm run coverage"
   },
   "author": {
     "name": "Jack Anderson",
@@ -32,6 +33,7 @@
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.11.1",
     "grunt-jscs": "^1.6.0",
+    "istanbul": "^0.3.13",
     "load-grunt-tasks": "^3.1.0",
     "mocha": "^2.2.1"
   }

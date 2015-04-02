@@ -28,7 +28,7 @@ describe('Annotation', function() {
 		});
 	});
 
-	describe('annotation detection', function() {
+	describe('detection', function() {
 
 		it('builds a regex containing the annotation name', function() {
 			var a = new Annotation({
@@ -117,7 +117,7 @@ describe('Annotation', function() {
 
 	});
 
-	describe('annotation value retrieval', function() {
+	describe('value retrieval', function() {
 		it('retrieves annotation value from comments', function() {
 			var a = new Annotation({
 				name: 'foo',

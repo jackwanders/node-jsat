@@ -1,4 +1,4 @@
 /** @constructor */
-var foo = function(a) {
+function Foo(a) {
 	this.a = a;
 };
