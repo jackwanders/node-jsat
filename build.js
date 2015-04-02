@@ -1,16 +1,11 @@
 var fs = require('fs');
-var _ = require('lodash');
-var recast = require('recast');
-var n = recast.types.namedTypes;
-
-var annotations = require('./lib/annotations');
+var jsat = require('./index');
 
 // module to transform
 var infile = __dirname + '/testmodule.js';
 var outfile = __dirname + '/dist/testmodule.js';
 
-var moduleAST = recast.parse(fs.readFileSync(infile, 'utf8'));
+var source = fs.readFileSync(infile, 'utf8');
+var output = jsat.transform(source);
 
-annotations.enact(moduleAST);
-
-fs.writeFileSync(outfile, recast.print(moduleAST).code);
+fs.writeFileSync(outfile, output);

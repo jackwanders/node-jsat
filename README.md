@@ -26,7 +26,7 @@ If you'd like to see `jsat` in action, do the following:
 * Checkout this repo
 * run `node build.js` to convert `/testmodule.js` to `/dist/testmodule.js` using `jsat`
 * compare `/testmodule.js` and `/dist/testmodule.js` to see the changes made to the code by `jsat`
-* run `node test.js` to execute the transformed source in the terminal
+* run `node run.js` to execute the transformed source in the terminal
 
 ### TODO
 
