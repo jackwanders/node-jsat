@@ -21,12 +21,17 @@ Below is a list of annotation transforms currently being developed.
 | `@deprecated` | Indicate that the function should no longer be relied upon | Call `console.trace` or `console.warn` the first time the method is called, telling the user that the method is deprected
 | `@constructor` (aka `@class`) | Indicate that the function should be used with the `new keyword` to create instances | Throw a `SyntaxError` if the function is called without the `new` keyword
 
-If you'd like to see `jsat` in action, do the following:
+### API
 
-* Checkout this repo
-* run `node build.js` to convert `/testmodule.js` to `/dist/testmodule.js` using `jsat`
-* compare `/testmodule.js` and `/dist/testmodule.js` to see the changes made to the code by `jsat`
-* run `node run.js` to execute the transformed source in the terminal
+Right now, `jsat` exposes a single method, `.transform` which takes a string representing your source file and returns a string representing the transformed file contents.
+
+```javascript
+var jsat = require('jsat');
+var fs = require('fs');
+var source = fs.readFileSync('path/to/sourcefile.js', 'utf8');
+var output = jsat.transform(source);
+fs.writeFileSync('path/to/outputfile.js', output);
+```
 
 ### TODO
 
