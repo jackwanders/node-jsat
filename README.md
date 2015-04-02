@@ -21,6 +21,8 @@ Below is a list of annotation transforms currently being developed.
 | `@deprecated` | Indicate that the function should no longer be relied upon | Call `console.trace` or `console.warn` the first time the method is called, telling the user that the method is deprected
 | `@constructor` (aka `@class`) | Indicate that the function should be used with the `new keyword` to create instances | Throw a `SyntaxError` if the function is called without the `new` keyword
 
+You can find example source and output files for these annotations in the [examples directory](examples).
+
 ### API
 
 Right now, `jsat` exposes a single method, `.transform` which takes a string representing your source file and returns a string representing the transformed file contents.
