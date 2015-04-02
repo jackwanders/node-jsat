@@ -14,6 +14,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "examples": "node ./examples/build.js && node ./examples/run.js",
     "test": "grunt checkcode && mocha"
   },
   "author": {
