@@ -51,4 +51,35 @@ describe('Constructor Annotation', function() {
 
 	});
 
+	describe('options', function() {
+		var outfile;
+		var module;
+
+		before(function() {
+			var filename = utils.generateOutputFilename();
+			outfile = path.join(__dirname, 'fixtures/modules', filename);
+			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'constructor.js'), 'utf8');
+			var output = jsat.transform(input, {
+				constructor: {
+					force: true
+				}
+			});
+			fs.writeFileSync(outfile, output);
+			module = require('./fixtures/modules/' + filename);
+		});
+
+		after(function() {
+			fs.unlink(outfile);
+		});
+
+		it('calls console.warn when options.force is false', function() {
+			var stub = sinon.stub(console, 'warn');
+			assert.doesNotThrow(function() {
+				var thing = module.ConstructorFn();
+			});
+			assert.equal(stub.callCount, 1, 'expected console.warn to be called when options.force is true');
+			console.warn.restore();
+		});
+	});
+
 });

@@ -52,4 +52,32 @@ describe('Param Annotation', function() {
 
 	});
 
+	describe('options', function() {
+		var outfile;
+		var module;
+
+		before(function() {
+			var filename = utils.generateOutputFilename();
+			outfile = path.join(__dirname, 'fixtures/modules', filename);
+			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
+			var output = jsat.transform(input, {
+				param: {
+					force: false
+				}
+			});
+			fs.writeFileSync(outfile, output);
+			module = require('./fixtures/modules/' + filename);
+		});
+
+		after(function() {
+			fs.unlink(outfile);
+		});
+
+		it('throws if options.force is false', function() {
+			assert.throws(function() {
+				module.add('3', 4);
+			}, TypeError);
+		});
+	});
+
 });

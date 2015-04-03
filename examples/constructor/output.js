@@ -1,7 +1,12 @@
 /** @constructor */
 var Car = function Car(make, model) {
     if (!(this instanceof Car)) {
-		throw new SyntaxError("mising new keyword when calling Car constructor");
+		var message = "mising new keyword when calling Car constructor";
+		if (false) {
+			console.warn(message);
+		} else {
+			throw new SyntaxError(message);
+		}
 	}
     {
         this.make = make;
