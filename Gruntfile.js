@@ -5,6 +5,15 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
+		coveralls: {
+			options: {
+				force: true
+			},
+			travis: {
+				src: 'coverage/lcov.info'
+			}
+		},
+
 		// Run a check-style task against scripts (uses jsxcs)
 		jscs: {
 

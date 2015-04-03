@@ -1,4 +1,4 @@
-# node-jsat [![Build Status](https://travis-ci.org/jackwanders/node-jsat.svg?branch=master)](https://travis-ci.org/jackwanders/node-jsat)
+# node-jsat [![Build Status](https://travis-ci.org/jackwanders/node-jsat.svg?branch=master)](https://travis-ci.org/jackwanders/node-jsat) [![Coverage Status](https://coveralls.io/repos/jackwanders/node-jsat/badge.svg?branch=master)](https://coveralls.io/r/jackwanders/node-jsat?branch=master)
 
 **J**ava**S**cript **A**nnotation **T**ransforms
 
