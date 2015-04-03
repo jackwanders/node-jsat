@@ -19,18 +19,6 @@ describe('jsat API', function() {
 			assert.equal(output, input, 'expected unannotated source to pass through jsat untouched');
 		});
 
-		it('transforms @deprecated annotated code', function() {
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'deprecated.js'), 'utf8');
-			var output = jsat.transform(input);
-			assert.notEqual(output, input, 'expected deprecated source to be transformed by jsat');
-		});
-
-		it('transforms @constructor annotated code', function() {
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'constructor.js'), 'utf8');
-			var output = jsat.transform(input);
-			assert.notEqual(output, input, 'expected constructor source to be transformed by jsat');
-		});
-
 		it('transforms @param annotated code', function() {
 			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
 			var output = jsat.transform(input);
