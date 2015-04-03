@@ -31,6 +31,12 @@ describe('jsat API', function() {
 			assert.notEqual(output, input, 'expected constructor source to be transformed by jsat');
 		});
 
+		it('transforms @param annotated code', function() {
+			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
+			var output = jsat.transform(input);
+			assert.notEqual(output, input, 'expected constructor source to be transformed by jsat');
+		});
+
 		it('transforms code with multiple annotations', function() {
 			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'multi.js'), 'utf8');
 			var output = jsat.transform(input);
@@ -43,11 +49,10 @@ describe('jsat API', function() {
 			assert.notEqual(output, input, 'expected jsat to successfully transform code with multiple annotations');
 		});
 
-		it('throws when annotating a non-function with a function annotation', function() {
-			assert.throws(function() {
-				var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'annotatedLiteral.js'), 'utf8');
-				var output = jsat.transform(input);
-			}, Error);
+		it('does not transform node if type does not match type of annotation', function() {
+			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'annotatedLiteral.js'), 'utf8');
+			var output = jsat.transform(input);
+			assert.equal(output, input, 'expected annotated literal to remain unmodified');
 		});
 
 	});

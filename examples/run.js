@@ -4,7 +4,7 @@ var _ = require('lodash');
 var jsat = require('../index');
 
 var examples = [
-	'constructor', 'deprecated'
+	'constructor', 'deprecated', 'param'
 ];
 
 _.each(examples, function(dir) {

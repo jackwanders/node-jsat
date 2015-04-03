@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'lib',
-					src: ['**/*.js']
+					src: ['**/*.js', '!**/*.tmpl.js']
 				}]
 			}
 
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'lib',
-					src: ['**/*.js']
+					src: ['**/*.js', '!**/*.tmpl.js']
 				}]
 			}
 		}

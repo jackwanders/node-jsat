@@ -92,6 +92,7 @@ describe('Annotation', function() {
 			var badComments = [
 				'// @foo',
 				'/* @foo */',
+				'/*** @foo */',
 				'/*\n @foo\n */'
 			];
 			_.each(badComments, function(comment) {
@@ -132,6 +133,20 @@ describe('Annotation', function() {
 				var val = recast.parse(comment).program.comments[0].value;
 				assert.equal(a.getAnnotationValueFromComment(val), 'bar', 'expected annotation to retrieve "bar" from ' + comment);
 			});
+		});
+
+		it('retrieves multiple values when annotation is repeated', function() {
+			var a = new Annotation({
+				name: 'foo',
+				type: 'function',
+				defaultValue: 'baz'
+			});
+			var comment = '/**\n * @foo beep\n * another comment\n * @foo {boop} bop\n */';
+			var val = recast.parse(comment).program.comments[0].value;
+			var annotationValues = a.getAnnotationValueFromComment(val);
+			assert.equal(annotationValues.length, 2, 'expected to get two annotation values');
+			assert.equal(annotationValues[0], 'beep', 'expected first annotation value to be "beep"');
+			assert.equal(annotationValues[1], '{boop} bop', 'expected second annotation value to be "{boop} bop"');
 		});
 
 		it('returns default value if no value is found alongside annotation', function() {
