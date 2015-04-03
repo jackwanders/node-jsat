@@ -31,7 +31,7 @@ describe('Deprecated Annotation', function() {
 		it('calls console.trace when a deprecated function is called', function() {
 			var stub = sinon.stub(console, 'trace');
 			deprecatedFn();
-			assert(stub.called);
+			assert(stub.called, 'expected console.trace to be called');
 			console.trace.restore();
 		});
 
@@ -39,7 +39,7 @@ describe('Deprecated Annotation', function() {
 			var stub = sinon.stub(console, 'trace');
 			deprecatedFn();
 			deprecatedFn();
-			assert.equal(stub.callCount, 1);
+			assert.equal(stub.callCount, 1, 'expected console.trace to only be called once');
 			console.trace.restore();
 		});
 
@@ -47,7 +47,7 @@ describe('Deprecated Annotation', function() {
 			console.trace = null;
 			var stub = sinon.stub(console, 'warn');
 			deprecatedFn();
-			assert(stub.called);
+			assert(stub.called, 'expected function to fall back to console.warn');
 			console.warn.restore();
 		});
 

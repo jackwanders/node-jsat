@@ -19,12 +19,6 @@ describe('jsat API', function() {
 			assert.equal(output, input, 'expected unannotated source to pass through jsat untouched');
 		});
 
-		it('transforms @param annotated code', function() {
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
-			var output = jsat.transform(input);
-			assert.notEqual(output, input, 'expected constructor source to be transformed by jsat');
-		});
-
 		it('transforms code with multiple annotations', function() {
 			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'multi.js'), 'utf8');
 			var output = jsat.transform(input);
