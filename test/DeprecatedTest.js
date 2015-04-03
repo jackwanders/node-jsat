@@ -16,11 +16,11 @@ describe('Deprecated Annotation', function() {
 
 		beforeEach(function() {
 			var filename = utils.generateOutputFilename();
-			outfile = path.join(__dirname, 'fixtures/output', filename);
+			outfile = path.join(__dirname, 'fixtures/modules', filename);
 			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'deprecated.js'), 'utf8');
 			var output = jsat.transform(input);
 			fs.writeFileSync(outfile, output);
-			deprecatedFn = require('./fixtures/output/' + filename);
+			deprecatedFn = require('./fixtures/modules/' + filename);
 		});
 
 		afterEach(function() {
