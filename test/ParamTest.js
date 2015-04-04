@@ -50,6 +50,22 @@ describe('Param Annotation', function() {
 			console.warn.restore();
 		});
 
+		it('works properly if not all parameters are annotated', function() {
+			var stub = sinon.stub(console, 'warn');
+			module.subtract('3', 2);
+			assert.equal(stub.callCount, 0);
+			console.warn.restore();
+		});
+
+		it('works properly if annotation order is wrong', function() {
+			var stub = sinon.stub(console, 'warn');
+			module.combine(1, '2');
+			assert.equal(stub.callCount, 0);
+			module.combine('1', 2);
+			assert.equal(stub.callCount, 2);
+			console.warn.restore();
+		});
+
 	});
 
 	describe('options', function() {

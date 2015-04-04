@@ -30,22 +30,22 @@ describe('Constructor Annotation', function() {
 
 		it('works properly when new keyword is used on a @constructor annotated function', function() {
 			assert.doesNotThrow(function() {
-				var thing = new module.ConstructorFn();
+				var thing = new module.Constructor();
 			});
 		});
 
 		it('works properly when new keyword is used on a @class annotated function', function() {
 			assert.doesNotThrow(function() {
-				var thing = new module.ClassFn();
+				var thing = new module.Class();
 			});
 		});
 
 		it('throws a SyntaxError when the new keyword is omitted', function() {
 			assert.throws(function() {
-				var thing = module.ConstructorFn();
+				var thing = module.Constructor();
 			}, SyntaxError);
 			assert.throws(function() {
-				var thing = module.ClassFn();
+				var thing = module.Class();
 			}, SyntaxError);
 		});
 
@@ -75,7 +75,7 @@ describe('Constructor Annotation', function() {
 		it('calls console.warn when options.force is false', function() {
 			var stub = sinon.stub(console, 'warn');
 			assert.doesNotThrow(function() {
-				var thing = module.ConstructorFn();
+				var thing = module.Constructor();
 			});
 			assert.equal(stub.callCount, 1, 'expected console.warn to be called when options.force is true');
 			console.warn.restore();

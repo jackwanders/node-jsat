@@ -12,7 +12,7 @@ describe('Deprecated Annotation', function() {
 	describe('transformed function', function() {
 
 		var outfile;
-		var deprecatedFn;
+		var module;
 
 		beforeEach(function() {
 			var filename = utils.generateOutputFilename();
@@ -20,25 +20,26 @@ describe('Deprecated Annotation', function() {
 			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'deprecated.js'), 'utf8');
 			var output = jsat.transform(input);
 			fs.writeFileSync(outfile, output);
-			deprecatedFn = require('./fixtures/modules/' + filename);
+			module = require('./fixtures/modules/' + filename);
 		});
 
 		afterEach(function() {
-			deprecatedFn = null;
+			module = null;
 			fs.unlink(outfile);
 		});
 
 		it('calls console.trace when a deprecated function is called', function() {
 			var stub = sinon.stub(console, 'trace');
-			deprecatedFn();
-			assert(stub.called, 'expected console.trace to be called');
+			module.add(1, 2);
+			module.subtract(3,2);
+			assert.equal(stub.callCount, 2, 'expected console.trace to be called for each method');
 			console.trace.restore();
 		});
 
 		it('calls console.trace once and only once when deprecated function is called multiple times', function() {
 			var stub = sinon.stub(console, 'trace');
-			deprecatedFn();
-			deprecatedFn();
+			module.add(1, 2);
+			module.add(3, 4);
 			assert.equal(stub.callCount, 1, 'expected console.trace to only be called once');
 			console.trace.restore();
 		});
@@ -46,7 +47,7 @@ describe('Deprecated Annotation', function() {
 		it('falls back to console.warn if console.trace doesn\'t exist', function() {
 			console.trace = null;
 			var stub = sinon.stub(console, 'warn');
-			deprecatedFn();
+			module.subtract(4, 3);
 			assert(stub.called, 'expected function to fall back to console.warn');
 			console.warn.restore();
 		});

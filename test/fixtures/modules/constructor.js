@@ -4,6 +4,7 @@ function Foo(a) {
 };
 
 /**
+ * Build a bar
  * @class
  */
 var Bar = function(b) {
@@ -11,6 +12,6 @@ var Bar = function(b) {
 };
 
 module.exports = {
-	ConstructorFn: Foo,
-	ClassFn: Bar
+	Constructor: Foo,
+	Class: Bar
 };
