@@ -1,3 +1,8 @@
+# 0.0.4 (April 3, 2015)
+
+* Added ability to configure `jsat.transform` with options
+* Made `@param` transform more robust, accounting for missing annotations or annotations in the wrong order
+
 # 0.0.3 (April 3, 2015)
 
 * Added type-checking transform using @param annotation
