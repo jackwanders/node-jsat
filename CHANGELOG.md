@@ -1,3 +1,7 @@
+# 0.0.6 (April 5, 2015)
+
+* Made `console` method called by `@deprecated` transform configurable (defaults to `.trace`)
+
 # 0.0.5 (April 5, 2015)
 
 * `@deprecated` transform now calls `console.warn` on all function calls
