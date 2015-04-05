@@ -7,7 +7,7 @@ var recast = require('recast');
 
 describe('jsat API', function() {
 
-	describe('.transforms', function() {
+	describe('.transform', function() {
 
 		it('is a function', function() {
 			assert.equal(typeof jsat.transform, 'function', 'expected jsat.transform to be a function');

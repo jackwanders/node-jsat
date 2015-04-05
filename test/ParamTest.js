@@ -1,99 +1,136 @@
-var jsat = require('../index');
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var _ = require('lodash');
 var fs = require('fs');
-var path = require('path');
-var recast = require('recast');
 var utils = require('./utils');
+var assert = require('chai').assert;
 
 describe('Param Annotation', function() {
 
-	describe('transformed function', function() {
+	var affectedNodes = [
+		'variableDeclaration',
+		'functionDeclaration',
+		'property'
+	];
 
-		var outfile;
-		var module;
-
-		beforeEach(function() {
-			var filename = utils.generateOutputFilename();
-			outfile = path.join(__dirname, 'fixtures/modules', filename);
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
-			var output = jsat.transform(input);
-			fs.writeFileSync(outfile, output);
-			module = require('./fixtures/modules/' + filename);
-		});
-
-		afterEach(function() {
-			module = null;
-			fs.unlink(outfile);
-		});
-
-		it('works properly when parameters have the proper type', function() {
-			var stub = sinon.stub(console, 'warn');
-			module.add(1, 2);
-			module.multBy2(18);
-			assert.equal(stub.callCount, 0);
-			console.warn.restore();
-		});
-
-		it('will warn when a parameter has a type mismatch', function() {
-			var stub = sinon.stub(console, 'warn');
-			module.add('3', 4);
-			assert.equal(stub.callCount, 1);
-			console.warn.restore();
-		});
-
-		it('warns for every mismatched argument', function() {
-			var stub = sinon.stub(console, 'warn');
-			module.add('3', {foo:3});
-			assert.equal(stub.callCount, 2);
-			console.warn.restore();
-		});
-
-		it('works properly if not all parameters are annotated', function() {
-			var stub = sinon.stub(console, 'warn');
-			module.subtract('3', 2);
-			assert.equal(stub.callCount, 0);
-			console.warn.restore();
-		});
-
-		it('works properly if annotation order is wrong', function() {
-			var stub = sinon.stub(console, 'warn');
-			module.combine(1, '2');
-			assert.equal(stub.callCount, 0);
-			module.combine('1', 2);
-			assert.equal(stub.callCount, 2);
-			console.warn.restore();
-		});
-
-	});
-
-	describe('options', function() {
-		var outfile;
-		var module;
-
-		before(function() {
-			var filename = utils.generateOutputFilename();
-			outfile = path.join(__dirname, 'fixtures/modules', filename);
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'param.js'), 'utf8');
-			var output = jsat.transform(input, {
-				param: {
-					force: false
-				}
+	affectedNodes.forEach(function(type) {
+		describe('node type: ' + type, function() {
+			describe('with default options', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('param', type, dest);
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('doesn\'t warn when parameters have expected types', function() {
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.add(1, 2);
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.twice(1);
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.combine('1', 2);
+						}
+					});
+				});
+				it('calls console.warn when there is a type mismatch', function() {
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 1,
+						fn: function() {
+							module.add('1', 2);
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 1,
+						fn: function() {
+							module.twice('1');
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 1,
+						fn: function() {
+							module.combine(1, 2);
+						}
+					});
+				});
 			});
-			fs.writeFileSync(outfile, output);
-			module = require('./fixtures/modules/' + filename);
-		});
-
-		after(function() {
-			fs.unlink(outfile);
-		});
-
-		it('throws if options.force is false', function() {
-			assert.throws(function() {
-				module.add('3', 4);
-			}, TypeError);
+			describe('when options.force === false', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('param', type, dest, {
+						param: {
+							force: false
+						}
+					});
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('throws a TypeError when there is a type mismatch', function() {
+					assert.throws(function() {
+						module.add('1', 2);
+					});
+					assert.throws(function() {
+						module.twice('1');
+					});
+					assert.throws(function() {
+						module.combine(1, 2);
+					});
+				});
+			});
+			describe('when disabled by options', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('param', type, dest, {
+						param: false
+					});
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('doesn\'t call console.warn when there is a type mismatch', function() {
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.add('1', 2);
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.twice('1');
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							module.combine(1, 2);
+						}
+					});
+				});
+			});
 		});
 	});
-
 });

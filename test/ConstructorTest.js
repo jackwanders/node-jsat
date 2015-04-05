@@ -1,85 +1,104 @@
-var jsat = require('../index');
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var _ = require('lodash');
 var fs = require('fs');
-var path = require('path');
-var recast = require('recast');
 var utils = require('./utils');
+var assert = require('chai').assert;
 
 describe('Constructor Annotation', function() {
 
-	describe('transformed function', function() {
+	var affectedNodes = [
+		'variableDeclaration',
+		'functionDeclaration',
+		'property'
+	];
 
-		var outfile;
-		var module;
-
-		beforeEach(function() {
-			var filename = utils.generateOutputFilename();
-			outfile = path.join(__dirname, 'fixtures/modules', filename);
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'constructor.js'), 'utf8');
-			var output = jsat.transform(input);
-			fs.writeFileSync(outfile, output);
-			module = require('./fixtures/modules/' + filename);
-		});
-
-		afterEach(function() {
-			module = null;
-			fs.unlink(outfile);
-		});
-
-		it('works properly when new keyword is used on a @constructor annotated function', function() {
-			assert.doesNotThrow(function() {
-				var thing = new module.Constructor();
+	affectedNodes.forEach(function(type) {
+		describe('node type: ' + type, function() {
+			describe('with default options', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('constructor', type, dest);
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('doesn\'t throw when new keyword is used', function() {
+					assert.doesNotThrow(function() {
+						var car = new module.Car();
+					}, SyntaxError);
+					assert.doesNotThrow(function() {
+						var truck = new module.Truck();
+					}, SyntaxError);
+				});
+				it('throws a SyntaxError when new keyword is missing', function() {
+					assert.throws(function() {
+						var car = module.Car();
+					}, SyntaxError);
+					assert.throws(function() {
+						var truck = module.Truck();
+					}, SyntaxError);
+				});
+			});
+			describe('when options.force === true', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('constructor', type, dest, {
+						constructor: {
+							force: true
+						}
+					});
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('calls console.warn', function() {
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 1,
+						fn: function() {
+							var car = module.Car();
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 1,
+						fn: function() {
+							var truck = module.Truck();
+						}
+					});
+				});
+			});
+			describe('when disabled by options', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('constructor', type, dest, {
+						constructor: false
+					});
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('does not call console.warn', function() {
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							var car = module.Car();
+						}
+					});
+					utils.assertConsoleCalls({
+						method: 'warn',
+						callCount: 0,
+						fn: function() {
+							var truck = module.Truck();
+						}
+					});
+				});
 			});
 		});
-
-		it('works properly when new keyword is used on a @class annotated function', function() {
-			assert.doesNotThrow(function() {
-				var thing = new module.Class();
-			});
-		});
-
-		it('throws a SyntaxError when the new keyword is omitted', function() {
-			assert.throws(function() {
-				var thing = module.Constructor();
-			}, SyntaxError);
-			assert.throws(function() {
-				var thing = module.Class();
-			}, SyntaxError);
-		});
-
 	});
-
-	describe('options', function() {
-		var outfile;
-		var module;
-
-		before(function() {
-			var filename = utils.generateOutputFilename();
-			outfile = path.join(__dirname, 'fixtures/modules', filename);
-			var input = fs.readFileSync(path.join(__dirname, 'fixtures/modules', 'constructor.js'), 'utf8');
-			var output = jsat.transform(input, {
-				constructor: {
-					force: true
-				}
-			});
-			fs.writeFileSync(outfile, output);
-			module = require('./fixtures/modules/' + filename);
-		});
-
-		after(function() {
-			fs.unlink(outfile);
-		});
-
-		it('calls console.warn when options.force is false', function() {
-			var stub = sinon.stub(console, 'warn');
-			assert.doesNotThrow(function() {
-				var thing = module.Constructor();
-			});
-			assert.equal(stub.callCount, 1, 'expected console.warn to be called when options.force is true');
-			console.warn.restore();
-		});
-	});
-
 });

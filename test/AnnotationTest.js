@@ -1,8 +1,6 @@
 var Annotation = require('../lib/Annotation');
 var assert = require('chai').assert;
 var _ = require('lodash');
-var fs = require('fs');
-var path = require('path');
 var recast = require('recast');
 
 describe('Annotation', function() {

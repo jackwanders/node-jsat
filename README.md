@@ -56,30 +56,13 @@ Calling `jsat.transform` on the string containing your source code will do the f
 3. Transform annotated nodes using the included transformer template defined by each annotation type
 4. Print the AST back to a string and return it
 
-Below is a list of currently supported JSDoc annotations (source can be viewed in the [`lib/annotations` directory](lib/annotations)).
+### API
 
-| Annotation | Purpose | Effect of Transform
-|------------|---------|---------------------
-| `@deprecated` | Indicate that the function will be removed in a future release | Call `console.trace` or `console.warn` the first time the method is called, telling the user that the method is deprected
-| `@constructor` (aka `@class`) | Indicate that the function should be used with the `new keyword` to create instances | Throw a `SyntaxError` if the function is called without the `new` keyword
-| `@param` | Indicate expected type for function parameters | Warn when the annotated function receives an argument whose type does not match that indicated by the annotation
+For documentation on `jsat`'s API, please read the [API Reference](API.md).
+
+### Examples
 
 You can find example source and output files for these annotations in the [`examples` directory](examples).
-
-### Transform Options
-
-You can customize the output of `jsat` by providing options to `jsat.transform`. This allows you to decide which annotation transforms to apply as well as what options to provide to those transforms. For example, if you only want to apply `@deprecated` and `@constructor` transforms, and you want to force execution to continue of the lack of a `new` keyword is detected, then you can run:
-
-```javascript
-var output = jsat.transform(input, {
-    constructor: {
-        force: true
-    },
-    deprecated: true
-});
-```
-
-By default, `jsat` will run your source through all available annotations, but when providing an `options` map, you must explicitly choose which annotation transforms to apply, either by setting the value of the annotation key to `true` or a map of options for that annotation type.
 
 ### Custom Annotations
 
