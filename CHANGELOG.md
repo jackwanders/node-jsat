@@ -1,3 +1,8 @@
+# 0.0.5 (April 5, 2015)
+
+* `@deprecated` transform now calls `console.warn` on all function calls
+* Added ability to transform function declarations and object properties
+
 # 0.0.4 (April 3, 2015)
 
 * Added ability to configure `jsat.transform` with options
