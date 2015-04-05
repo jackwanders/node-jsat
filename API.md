@@ -38,19 +38,21 @@ The options for each annotation can be found below.
 
 #### `@deprecated`
 
-The `@deprecated` annotation does not currently accept options.
+| option | type | default | effect
+|:------ |:---- |:------- |:-------
+| `logger` | `String` | `trace` | Specifies which `console` method to call when deprecated method is called.
 
 #### `@constructor`
 
 | option | type | default | effect
 |:------ |:---- |:------- |:-------
-| `force` | `Boolean` | `false` | Call `console.warn` (`true`) or throw a `SyntaxError` (`false`) when constructor is called without `new` keyword
+| `force` | `Boolean` | `false` | Call `console.warn` (`true`) or throw a `SyntaxError` (`false`) when constructor is called without `new` keyword.
 
 #### `@param`
 
 | option | type | default | effect
 |:------ |:---- |:------- |:-------
-| `force` | `Boolean` | `true` | Call `console.warn` (`true`) or throw a `TypeError` (`false`) when function argument does not match expected parameter type
+| `force` | `Boolean` | `true` | Call `console.warn` (`true`) or throw a `TypeError` (`false`) when function argument does not match expected parameter type.
 
 
 

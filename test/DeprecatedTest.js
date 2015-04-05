@@ -30,17 +30,29 @@ describe('Deprecated Annotation', function() {
 						}
 					});
 				});
-				it('falls back to console.warn when console.trace isn\'t found', function() {
-					_trace = console.trace;
-					console.trace = null;
+			});
+			describe('when options.logger === \'info\'', function() {
+				var dest;
+				var module;
+				before(function() {
+					dest = utils.generateDestination();
+					module = utils.createModule('deprecated', type, dest, {
+						deprecated: {
+							logger: 'info'
+						}
+					});
+				});
+				after(function() {
+					fs.unlink(dest);
+				});
+				it('calls console.info instead of the default console.trace', function() {
 					utils.assertConsoleCalls({
-						method: 'warn',
+						method: 'info',
 						callCount: 1,
 						fn: function() {
 							module.beep();
 						}
 					});
-					console.trace = _trace;
 				});
 			});
 			describe('when disabled by options', function() {
