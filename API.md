@@ -1,5 +1,4 @@
 # API Reference
-v0.0.5
 
 * [Core](#core)
     - [`.transform(String source[, Object options])`](#jsattransformstring-source-object-options---string)
@@ -40,7 +39,7 @@ The options for each annotation can be found below.
 
 | option | type | default | effect
 |:------ |:---- |:------- |:-------
-| `logger` | `String` | `trace` | Specifies which `console` method to call when deprecated method is called.
+| `logger` | `String` | `'trace'` | Specifies which `console` method to call when deprecated method is called.
 
 #### `@constructor`
 
